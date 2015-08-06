@@ -1,0 +1,7 @@
+2015-08-07 00:53:19 INFO  LogLog4j:46 - Opening login page
+2015-08-07 00:53:21 INFO  LogLog4j:133 - Checking ability recreate password
+2015-08-07 00:53:24 INFO  LogLog4j:46 - Opening login page
+2015-08-07 00:53:24 INFO  LogLog4j:73 - Checking ability login ,logout and login again with another user
+2015-08-07 00:53:24 INFO  LogLog4j:89 - entering email: osh_il+4@yahoo.com 
+2015-08-07 00:53:24 INFO  LogLog4j:95 - entering password: 111111 
+2015-08-07 00:53:32 INFO  LogLog4j:54 - Checking that all correct data added successfully
