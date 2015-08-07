@@ -36,7 +36,7 @@ public class TestBase {
 		firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
 		// Start Firefox driver
-		WebDriver driver = new FirefoxDriver(firefoxBinary, null);
+		driver = new FirefoxDriver(firefoxBinary, null);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
