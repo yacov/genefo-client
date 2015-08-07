@@ -184,7 +184,7 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterClass
     public void tearDown() {
         if (driver != null) {
             driver.quit();

@@ -11,9 +11,6 @@
 
 		<classes>
 			<class name="com.genefo.LoginTest"/>
-			<class name="com.genefo.SignUpHCPTest"/>
-			<class name="com.genefo.PostOnMainTest"/>
-
 		</classes>
 	</test>  
 </suite>
