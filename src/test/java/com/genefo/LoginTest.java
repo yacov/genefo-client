@@ -5,7 +5,6 @@ import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.ResetYourPasswordPage;
 import com.genefo.util.LogLog4j;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +13,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -40,7 +40,6 @@ public class LoginTest {
 
     @BeforeClass
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", "ru");
         String Xport = System.getProperty("lmportal.xvfb.id", ":0");
@@ -62,7 +61,7 @@ public class LoginTest {
     @BeforeMethod
     public void beforeMethodSetUp() {
         try {
-            driver.get(baseUrl + "/login");
+            driver.get("http://52.10.6.51:8080/login");
             loginPage
                     .waitUntilLoginPageIsLoaded();
         } catch (Exception e) {
@@ -183,5 +182,11 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
+    @AfterClass(alwaysRun = true)
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 }
