@@ -47,7 +47,7 @@ public class DocAcInfTest {
     public void setup() {
         baseUrl = PropertyLoader.loadProperty("site.url");
         FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
+        profile.setPreference("intl.accept_languages", "en");
         String Xport = System.getProperty("lmportal.xvfb.id", ":0");
         final File firefoxPath = new File(System.getProperty(
                 "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
@@ -56,9 +56,8 @@ public class DocAcInfTest {
 
         // Start Firefox driver
         driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 5);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 10);
         PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);

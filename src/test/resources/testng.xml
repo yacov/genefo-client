@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Tests" verbose="5" data-provider-thread-count="1">
-	<test name="Test1">
+	<test name="Reression Smoke tests">
 		<parameter name="path" value="/"/>
 		<groups>
 			<run>
 				<include name="smoke"/>
 			</run>
 		</groups>
+		<packages>
+			<package name="com.genefo"/>
+		</packages>
 
-		<classes>
-			<class name="com.genefo.LoginTest"/>
-			<class name="com.genefo.DocAcInfTest"/>
-		</classes>
 	</test>  
 </suite>
