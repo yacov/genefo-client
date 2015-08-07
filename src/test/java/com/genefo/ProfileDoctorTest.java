@@ -70,7 +70,7 @@ public class ProfileDoctorTest {
     @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         Log.info("Opening Profile Doctor Page");
-        profileDoctorPage.openProfileDoctorPage(driver, baseUrl);
+        driver.get(baseUrl + "/account_hcp");
         profileDoctorPage.waitUntilProfileDoctorPageIsLoaded();
     }
 
