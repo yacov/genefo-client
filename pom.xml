@@ -99,7 +99,7 @@
         <user.password></user.password>
         <grid2.hub></grid2.hub>
         <site.url>http://52.10.6.51:8080</site.url>
-        <browser.name>htmlUnit</browser.name>
+        <browser.name>firefox</browser.name>
         <browser.version></browser.version>
         <browser.platform></browser.platform>
       </properties>
