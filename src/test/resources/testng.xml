@@ -3,8 +3,15 @@
 <suite name="Tests" verbose="5" data-provider-thread-count="1">
 	<test name="Test1">
 		<parameter name="path" value="/"/>
+		<groups>
+			<run>
+				<include name="smoke"/>
+			</run>
+		</groups>
+
 		<classes>
 			<class name="com.genefo.LoginTest"/>
+			<class name="com.genefo.DocAcInfTest"/>
 		</classes>
 	</test>  
 </suite>

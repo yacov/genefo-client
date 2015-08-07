@@ -164,7 +164,7 @@ public class LoginTest {
         Reporter.log("Password recreated successful");
     }
 
-    @Test(groups = {"smoke", "negative"})
+    @Test(groups = {"smoke"})
     public void LoginWithEmptyFields() {
         Log.info("Checking inability lodin with empty fields");
         try {
@@ -182,7 +182,7 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterClass
     public void tearDown() {
         if (driver != null) {
             driver.quit();
