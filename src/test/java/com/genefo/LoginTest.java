@@ -52,7 +52,7 @@ public class LoginTest {
 
         // Start Firefox driver
         driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
@@ -63,7 +63,8 @@ public class LoginTest {
     @BeforeMethod
     public void beforeMethodSetUp() {
         try {
-            loginPage.openLoginPage(driver, baseUrl)
+            driver.get(baseUrl + "/login");
+            loginPage
                     .waitUntilLoginPageIsLoaded();
         } catch (Exception e) {
             e.printStackTrace();

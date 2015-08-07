@@ -39,10 +39,6 @@ public class LoginPage extends Page {
         PageFactory.initElements(driver, this);
     }
 
-    public LoginPage opennLoginPage(WebDriver driver) {
-        return this;
-    }
-
     public LoginPage openLoginPage(WebDriver driver, String baseUrl) {
         driver.get(baseUrl + "/login");
         Log.info("Opening login page");
