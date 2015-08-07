@@ -1,17 +1,16 @@
 package com.genefo;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.Platform;
+import com.genefo.util.PropertyLoader;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-
 import ru.stqa.selenium.factory.WebDriverFactory;
 
-import com.genefo.util.PropertyLoader;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Base class for all the TestNG-based test classes
@@ -28,19 +27,16 @@ public class TestBase {
 		baseUrl = PropertyLoader.loadProperty("site.url");
 		gridHubUrl = PropertyLoader.loadProperty("grid2.hub");
 
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setBrowserName(PropertyLoader.loadProperty("browser.name"));
-		capabilities.setVersion(PropertyLoader.loadProperty("browser.version"));
-		String platform = PropertyLoader.loadProperty("browser.platform");
-		if (!(null == platform || "".equals(platform))) {
-			capabilities.setPlatform(Platform.valueOf(PropertyLoader.loadProperty("browser.platform")));
-		}
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("intl.accept_languages", "ru");
+		String Xport = System.getProperty("lmportal.xvfb.id", ":0");
+		final File firefoxPath = new File(System.getProperty(
+				"lmportal.deploy.firefox.path", "/usr/bin/firefox"));
+		FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
+		firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-		if (!(null == gridHubUrl || "".equals(gridHubUrl))) {
-			driver = WebDriverFactory.getDriver(gridHubUrl, capabilities);
-		} else {
-			driver = WebDriverFactory.getDriver(capabilities);
-		}
+		// Start Firefox driver
+		WebDriver driver = new FirefoxDriver(firefoxBinary, null);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
