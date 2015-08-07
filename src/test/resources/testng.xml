@@ -3,8 +3,23 @@
 <suite name="Tests" verbose="5" data-provider-thread-count="1">
 	<test name="Test1">
 		<parameter name="path" value="/"/>
+		<groups>
+			<run>
+				<include name="smoke"/>
+			</run>
+		</groups>
+
 		<classes>
+			<class name="com.genefo.DocAcInfTest"/>
+			<class name="com.genefo.DocBasInfTest"/>
+			<class name="com.genefo.DocProfInfTest"/>
 			<class name="com.genefo.LoginTest"/>
+			<class name="com.genefo.ProfileDoctorTest"/>
+			<class name="com.genefo.SignUpHCPTest"/>
+			<class name="com.genefo.PostOnMainTest"/>
+			<class name="com.genefo.WhatWorksOnMainTest"/>
+			<class name="com.genefo.MDRatingTest"/>
+
 		</classes>
 	</test>  
 </suite>

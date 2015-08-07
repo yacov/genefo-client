@@ -42,7 +42,9 @@ public class LoginPage extends Page {
     public LoginPage opennLoginPage(WebDriver driver) {
         return this;
     }
-    public LoginPage openLoginPage() {
+
+    public LoginPage openLoginPage(WebDriver driver, String baseUrl) {
+        driver.get(baseUrl + "/login");
         Log.info("Opening login page");
         return this;
     }

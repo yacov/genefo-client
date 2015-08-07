@@ -1,0 +1,37 @@
+Language;Smiles;20;31
+Language;Babbles;34;5
+Language;First word;23;40
+Language;2-3 words;18;12
+Language;Speaks in full sentences;90;1
+Movement;Holds head;43;5
+Movement;Reaches for objects;56;8
+Movement;Rolls over;87;9
+Movement;Sits without support;9;9
+Movement;Crawls;87;6
+Movement;Pulls to stand;199;8
+Movement;Walk;54;21
+Movement;Runs;67;12
+Daily living;Dresses alone;67;32
+Daily living;Eats with spoon;122;34
+Daily living;Holds bottle;54;21
+Daily living;Toilet trained;34;34
+Procedure;Achilles tendon lengthening;6;8
+Procedure;Brain MRI;56;8
+Procedure;Gastrostomy;90;9
+Procedure;Medical trial;56;3
+Procedure;Remission;4;5
+Procedure;Spinal fusion surgery for scoliosis;122;2
+Procedure;Strabismus surgery;66;6
+Procedure;Surgery;45;32
+Complication;Behavioral problems;23;23
+Complication;Constipation;3;3
+Complication;Developmental delay;44;3
+Complication;Failure to thrive;122;2
+Complication;Feeding difficulties;34;6
+Complication;Gastroespophageal reflux;55;4
+Complication;Hearing loss;78;8
+Complication;Intellectual disability;4;23
+Complication;Obesity;2;1
+Complication;Seizures;1;1
+Complication;Sleep disorders;3;7
+

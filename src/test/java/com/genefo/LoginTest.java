@@ -14,6 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -51,7 +52,7 @@ public class LoginTest {
 
         // Start Firefox driver
         driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
@@ -62,8 +63,7 @@ public class LoginTest {
     @BeforeMethod
     public void beforeMethodSetUp() {
         try {
-            driver.get(baseUrl + "/login");
-            loginPage.openLoginPage()
+            loginPage.openLoginPage(driver, baseUrl)
                     .waitUntilLoginPageIsLoaded();
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,6 +183,7 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         if (driver != null) {
             driver.quit();
