@@ -43,7 +43,7 @@ public class DocAcInfTest {
     private String EMAIL1 = "osh_il+21@yahoo.com";
     private String EMAIL2 = "osh_il+19@yahoo.com";
 
-    @BeforeClass
+    @BeforeClass(groups = {"smoke"}, alwaysRun = true)
     public void setup() {
         baseUrl = PropertyLoader.loadProperty("site.url");
         FirefoxProfile profile = new FirefoxProfile();
@@ -75,7 +75,7 @@ public class DocAcInfTest {
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"smoke"}, alwaysRun = true)
     public void beforeMethodSetUp() {
         try {
             if (profileDoctorPage.isOnProfileDoctorPage() == false) {
@@ -180,7 +180,7 @@ public class DocAcInfTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterClass(groups = {"smoke"}, alwaysRun = true)
     public void tearDown() {
         if (driver != null) {
             driver.quit();

@@ -38,7 +38,7 @@ public class LoginTest {
     public WebDriver driver;
     public String baseUrl;
 
-    @BeforeClass
+    @BeforeClass(groups = {"smoke"}, alwaysRun = true)
     public void setup() {
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", "ru");
@@ -58,7 +58,7 @@ public class LoginTest {
         resetYourPasswordPage = PageFactory.initElements(driver, ResetYourPasswordPage.class);
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"smoke"}, alwaysRun = true)
     public void beforeMethodSetUp() {
         try {
             driver.get("http://52.10.6.51:8080/login");
@@ -182,7 +182,7 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
-    @AfterClass
+    @AfterClass(groups = {"smoke"}, alwaysRun = true)
     public void tearDown() {
         if (driver != null) {
             driver.quit();
