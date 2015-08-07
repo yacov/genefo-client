@@ -5,28 +5,19 @@ import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.ResetYourPasswordPage;
 import com.genefo.util.LogLog4j;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.util.concurrent.TimeUnit;
-
 import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Created by Oleg on 30.05.2015.
  */
-public class LoginTest {
+public class LoginTest extends TestBase {
     public static String USER = "osh_il+4@yahoo.com";
     public static String PASSWORD = "111111";
     public static String USER1 = "osh_il+1@yahoo.com";
@@ -35,12 +26,11 @@ public class LoginTest {
     public LoginPage  loginPage;
     public ResetYourPasswordPage  resetYourPasswordPage;
     public MainPage mainPage;
-    public WebDriver driver;
     public String baseUrl;
 
     @BeforeClass
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
+        /*baseUrl = PropertyLoader.loadProperty("site.url");
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", "ru");
         String Xport = System.getProperty("lmportal.xvfb.id", ":0");
@@ -52,7 +42,7 @@ public class LoginTest {
         // Start Firefox driver
         driver = new FirefoxDriver(firefoxBinary, null);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        PropertyConfigurator.configure("log4j.properties");
+        PropertyConfigurator.configure("log4j.properties");*/
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
         homePage = PageFactory.initElements(driver, HomePage.class);
@@ -183,9 +173,4 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }

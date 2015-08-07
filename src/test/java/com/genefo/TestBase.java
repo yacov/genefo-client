@@ -37,7 +37,7 @@ public class TestBase {
 
 		// Start Firefox driver
 		driver = new FirefoxDriver(firefoxBinary, null);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 
 	@AfterSuite(alwaysRun = true)
