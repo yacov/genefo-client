@@ -8,9 +8,11 @@
 				<include name="smoke"/>
 			</run>
 		</groups>
-		<packages>
-			<package name="com.genefo"/>
-		</packages>
 
-	</test>  
+		<classes>
+			<class name="com.genefo.PostOnMainTest"/>
+			<class name="com.genefo.WhatWorksOnMainTest"/>
+			<class name="com.genefo.SignUpHCPTest"/>
+		</classes>
+	</test>
 </suite>
