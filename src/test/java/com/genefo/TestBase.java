@@ -8,7 +8,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import ru.stqa.selenium.factory.WebDriverFactory;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +44,7 @@ public class TestBase {
 	@AfterSuite(alwaysRun = true)
 	public void tearDown() {
 		if (driver != null) {
-			WebDriverFactory.dismissDriver(driver);
+			driver.quit();
 		}
 	}
 }
