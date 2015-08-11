@@ -33,9 +33,7 @@ public class PostOnMainTest extends TestBase {
     @BeforeClass(alwaysRun = true)
     public void setup() {
         //PropertyConfigurator.configure("log4j.properties");
-        loginPage = PageFactory.initElements(driver, LoginPage.class);
-        mainPage = PageFactory.initElements(driver, MainPage.class);
-        postOnMainPage = PageFactory.initElements(driver, PostOnMainPage.class);
+
 
         try {
             loginPage.openLoginPage(driver, baseUrl);
@@ -50,10 +48,12 @@ public class PostOnMainTest extends TestBase {
 
     @BeforeMethod(alwaysRun = true)
     public void beforemethodsetup() {
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        mainPage = PageFactory.initElements(driver, MainPage.class);
+        postOnMainPage = PageFactory.initElements(driver, PostOnMainPage.class);
         //mainPage.openMainPage(driver, baseUrl);
         mainPage.waitUntilMainPageIsLoaded()
                 .openPostPanel();
-        postOnMainPage.waitUntilPostPanelIsLoaded();
     }
 
 

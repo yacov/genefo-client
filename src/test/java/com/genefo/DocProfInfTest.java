@@ -48,7 +48,7 @@ public class DocProfInfTest extends TestBase {
     public void beforeMethodSetUp() {
         try {
             Log.info("Opening Profile HCP page");
-            if (profileDoctorPage.isOnProfileDoctorPage() == false) {
+            if (!profileDoctorPage.isOnProfileDoctorPage()) {
                 docProfInfPage.clickOnDoneButton();
             }
             Log.info("Wait for load Profile HCP page");

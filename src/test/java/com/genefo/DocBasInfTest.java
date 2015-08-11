@@ -4,22 +4,14 @@ import com.genefo.pages.DocBasInfPage;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.ProfileDoctorPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
@@ -27,32 +19,18 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Oleg on 03.06.2015.
  */
-public class DocBasInfTest {
+public class DocBasInfTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
 
     public LoginPage loginPage;
     public MainPage mainPage;
     public ProfileDoctorPage profileDoctorPage;
     public DocBasInfPage docBasInfPage;
-    public WebDriver driver;
-    public String baseUrl;
     private boolean acceptNextAlert = true;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
         profileDoctorPage = PageFactory.initElements(driver, ProfileDoctorPage.class);
@@ -69,7 +47,7 @@ public class DocBasInfTest {
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         try {
             Log.info("Opening Profile HCP page");
@@ -87,7 +65,7 @@ public class DocBasInfTest {
 
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Checking that all correct data added successfully")
     public void EditBasicInfSuccess() {
         Log.info("Checking that all correct data added successfully");
         try {
@@ -97,7 +75,7 @@ public class DocBasInfTest {
                     .fillLocationField("afr")
                     .clickOnTooltip()
                     .clickOnSaveButton();
-            profileDoctorPage.waitUntilProfileDoctorPageIsLoaded();
+            //profileDoctorPage.waitUntilProfileDoctorPageIsLoaded();
             assertTrue("Profile HCP Page doesn't open", profileDoctorPage.isOnProfileDoctorPage());
             Reporter.log("all correct data added successful");
         } catch (Exception e) {
@@ -105,7 +83,7 @@ public class DocBasInfTest {
         }
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Checking that operation is canceled")
     public void ClickOnCancel() {
         Log.info("Checking that operation is canceled");
         try {
@@ -118,7 +96,7 @@ public class DocBasInfTest {
         }
     }
 
-    @Test(groups = {"smoke", "negative"})
+    @Test(groups = {"smoke", "negative"}, description = "Checking that empty fields are not updated")
     public void EditBasicInfEmptyFiels() {
         Log.info("Checking that empty fields are not updated");
         try {
@@ -160,10 +138,4 @@ public class DocBasInfTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
