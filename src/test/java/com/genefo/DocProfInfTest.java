@@ -47,6 +47,11 @@ public class DocProfInfTest extends TestBase {
     @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         try {
+            loginPage = PageFactory.initElements(driver, LoginPage.class);
+            mainPage = PageFactory.initElements(driver, MainPage.class);
+            profileDoctorPage = PageFactory.initElements(driver, ProfileDoctorPage.class);
+            docProfInfPage = PageFactory.initElements(driver, DocProfInfPage.class);
+
             Log.info("Opening Profile HCP page");
             if (!profileDoctorPage.isOnProfileDoctorPage()) {
                 docProfInfPage.clickOnDoneButton();
