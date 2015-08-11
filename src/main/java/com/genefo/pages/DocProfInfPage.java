@@ -4,8 +4,10 @@ import com.genefo.util.LogLog4j;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.io.IOException;
 
@@ -16,100 +18,143 @@ public class DocProfInfPage extends Page {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
     //Titles
     @FindBy(xpath = "//*[contains(text(),'Healthcare Professional Information')]")
+    @CacheLookup
     WebElement profInfTitle;
 
     @FindBy(xpath = "//*[@ng-repeat='specialty in profile.hcpSpecialties']/../tr[1]/td/h4")
+    @CacheLookup
     WebElement specialties;
     @FindBy(xpath = "//*[@ng-repeat='subspecialty in profile.hcpSubspecialties']/../tr[1]/td/h4")
+    @CacheLookup
     WebElement subspecialties;
     @FindBy(xpath = "//*[@ng-repeat='hcptitle in profile.hcpTitles']/../tr[1]/td/h4")
+    @CacheLookup
     WebElement titles;
     @FindBy(xpath = "//*[@ng-repeat='areaofinterest in profile.hcpAreasOfInterests']/../tr[1]/td/h4")
+    @CacheLookup
     WebElement areas;
     @FindBy(xpath = "//*[@ng-repeat='workplace in profile.hcpWorkPlaces']/../tr[1]/td[1]/h4")
+    @CacheLookup
     WebElement workName;
     @FindBy(xpath = "//*[@ng-repeat='workplace in profile.hcpWorkPlaces']/../tr[1]/td[2]/h4")
+    @CacheLookup
     WebElement workLocation;
 
     //buttons
     @FindBy(xpath = "//*[@ng-click='addHCPspecialty()' and not(@disabled='disabled')]")
+    @CacheLookup
     WebElement addSpecButton;
     @FindBy(xpath = "//*[@ng-click='addHCPspecialty()' and @disabled='disabled']")
+    @CacheLookup
     WebElement addSpecDisButton;
     @FindBy(xpath = "//*[@ng-click='checkDelete(specialty)']")
+    @CacheLookup
     WebElement delSpecButton;
     @FindBy(xpath = "//*[@ng-click='cancelDelete(specialty)']")
+    @CacheLookup
     WebElement cancelSpecButton;
     @FindBy(xpath = "//*[@ng-click='deleteHCPspecialty($index)']")
+    @CacheLookup
     WebElement confirmSpecButton;
     @FindBy(xpath = "//*[@ng-click='addHCPsubspecialty()'and not(@disabled='disabled')]")
+    @CacheLookup
     WebElement addSubButton;
     @FindBy(xpath = "//*[@ng-click='addHCPsubspecialty()'and @disabled='disabled']")
+    @CacheLookup
     WebElement addSubDisButton;
     @FindBy(xpath = "//*[@ng-click='checkDelete(subspecialty)']")
+    @CacheLookup
     WebElement delSubButton;
     @FindBy(xpath = "//*[@ng-click='cancelDelete(subspecialty)']")
+    @CacheLookup
     WebElement cancelSubButton;
     @FindBy(xpath = "//*[@ng-click='deleteHCPsubspecialty($index)']")
+    @CacheLookup
     WebElement confirmSubButton;
     @FindBy(xpath = "//*[@ng-click='addHCPtitle()'and not(@disabled='disabled')]")
+    @CacheLookup
     WebElement addTitleButton;
     @FindBy(xpath = "//*[@ng-click='addHCPtitle()'and @disabled='disabled']")
+    @CacheLookup
     WebElement addTitleDisButton;
     @FindBy(xpath = "//*[@ng-click='checkDelete(hcptitle)']")
+    @CacheLookup
     WebElement delTitleButton;
     @FindBy(xpath = "//*[@ng-click='cancelDelete(hcptitle)']")
+    @CacheLookup
     WebElement cancelTitleButton;
     @FindBy(xpath = "//*[@ng-click='deleteHCPtitle($index)']")
+    @CacheLookup
     WebElement confirmTitleButton;
     @FindBy(xpath = "/*//*[@ng-click='addHCPareaofinterest()'and not(@disabled='disabled')]")
+    @CacheLookup
     WebElement addAreasButton;
     @FindBy(xpath = "//*[@ng-click='addHCPareaofinterest()'and @disabled='disabled']")
+    @CacheLookup
     WebElement addAreasDisButton;
     @FindBy(xpath = "//*[@ng-click='cancelDelete(areaofinterest)']")
+    @CacheLookup
     WebElement cancelAreasButton;
     @FindBy(xpath = "//*[@ng-click='checkDelete(areaofinterest)']")
+    @CacheLookup
     WebElement delAreasButton;
     @FindBy(xpath = "//*[@ng-click='deleteHCPareaofinterest($index)']")
+    @CacheLookup
     WebElement confirmAreasButton;
     @FindBy(xpath = "/*//*[@ng-click='addHCPworkplace()'and not(@disabled='disabled')]")
+    @CacheLookup
     WebElement addWorkPlacesButton;
     @FindBy(xpath = "//*[@ng-click='addHCPworkplace()'and @disabled='disabled']")
+    @CacheLookup
     WebElement addWorkPlacesDisButton;
     @FindBy(xpath = "//*[@ng-click='cancelDelete(workplace)']")
+    @CacheLookup
     WebElement cancelWorkPlacesButton;
     @FindBy(xpath = "//*[@ng-click='checkDelete(workplace)']")
+    @CacheLookup
     WebElement delWorkPlacesButton;
     @FindBy(xpath = "//*[@ng-click='deleteHCPworkplace(workplace, $index)']")
+    @CacheLookup
     WebElement confirmWorkPlacesButton;
     @FindBy(xpath = "//*[@class='btn btn-success' and @ng-click='cancel_save()']")
+    @CacheLookup
     WebElement doneButton;
 
     //fields
     @FindBy(xpath = "//*[contains( @typeahead,'HCPspecialties')]")
+    @CacheLookup
     WebElement specField;
     @FindBy(xpath = "//*[contains( @typeahead,'subspecialty')]")
+    @CacheLookup
     WebElement subspecField;
     @FindBy(id = "titles")
+    @CacheLookup
     WebElement titleField;
     @FindBy(xpath = "//*[contains( @typeahead,'areaofinterest')]")
+    @CacheLookup
     WebElement areasField;
     @FindBy(id = "workplacename")
+    @CacheLookup
     WebElement workNameField;
     @FindBy(id = "workplacelocation")
+    @CacheLookup
     WebElement workLocatField;
 
     //toltips
     @FindBy(xpath = "//*[contains(@id,'option-0')]/a")
+    @CacheLookup
     WebElement specToltip;
     @FindBy(xpath = "//*[contains(@id,'option-0')]/a")
+    @CacheLookup
     WebElement areasToltip;
     @FindBy(xpath = "//*[contains(@id,'option-0')]/a")
+    @CacheLookup
     WebElement worklocatToltip;
+
 
     public DocProfInfPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
     }
 
     public DocProfInfPage waitUntilDocProfInfPageIsLoaded() {
@@ -132,8 +177,8 @@ public class DocProfInfPage extends Page {
         return exists(addWorkPlacesDisButton);
     }
 
-    public boolean isAddSpecButtonExists() {
-        return exists(addSpecButton);
+    public boolean isAddSpecButtonDisabled() {
+        return exists(addSpecDisButton);
     }
 
     public boolean isSpecExists() {

@@ -1,12 +1,13 @@
 package com.genefo;
 
 import com.genefo.util.PropertyLoader;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import ru.stqa.selenium.factory.WebDriverFactory;
 
 import java.io.File;
@@ -22,7 +23,7 @@ public class TestBase {
 
 	protected String baseUrl;
 
-	@BeforeClass
+	@BeforeSuite(alwaysRun = true)
 	public void init() {
 		baseUrl = PropertyLoader.loadProperty("site.url");
 		gridHubUrl = PropertyLoader.loadProperty("grid2.hub");
@@ -34,11 +35,12 @@ public class TestBase {
 				"lmportal.deploy.firefox.path", "/usr/bin/firefox"));
 		FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
 		firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
+		PropertyConfigurator.configure("log4j.properties");
 		// Start Firefox driver
 		driver = new FirefoxDriver(firefoxBinary, null);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
+
 
 	@AfterSuite(alwaysRun = true)
 	public void tearDown() {

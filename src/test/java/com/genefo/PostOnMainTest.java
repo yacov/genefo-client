@@ -3,23 +3,15 @@ package com.genefo;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.PostOnMainPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 import static org.testng.AssertJUnit.assertFalse;
@@ -28,32 +20,18 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by alex on 01/06/2015.
  */
-public class PostOnMainTest {
+public class PostOnMainTest extends TestBase {
 
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
-    public WebDriver driver;
+
     public WebDriverWait wait;
     public LoginPage loginPage;                         // Pages that we use in our tests
     public MainPage mainPage;
     public PostOnMainPage postOnMainPage;
-    public String baseUrl;
     private boolean acceptNextAlert = true;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         //PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
@@ -70,16 +48,16 @@ public class PostOnMainTest {
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforemethodsetup() {
-        mainPage.openMainPage(driver, baseUrl);
+        //mainPage.openMainPage(driver, baseUrl);
         mainPage.waitUntilMainPageIsLoaded()
                 .openPostPanel();
         postOnMainPage.waitUntilPostPanelIsLoaded();
     }
 
 
-    @Test(groups = {"smoke", "negative"})
+    // @Test(groups = {"negative"}, description = "Negative test: 'Post Category' empty post")
     public void SendEmptyPostTest() {
         Log.info("---------------------------------------------------------------");
         Log.info("Negative test: 'Post Category' empty post. ");
@@ -89,7 +67,7 @@ public class PostOnMainTest {
             postOnMainPage
                     .fillTextField(text)
                     .sendPost();
-            sleep(2000);
+
 
             assertFalse("Post was sent despite of absence of text", postOnMainPage.verifyTextFromSentPost(text));
             Reporter.log("Negative Test: Publishing of empty post was not Successful as planned");
@@ -98,7 +76,7 @@ public class PostOnMainTest {
         }
     }
 
-    @Test(groups = {"smoke", "negative"})
+    // @Test(groups = {"smoke", "negative"}, description = "Negative test: 'Post Category' one letter post. ")
     public void SendOneLetterPostTest() {
         Log.info("---------------------------------------------------------------");
         Log.info("Negative test: 'Post Category' one letter post. ");
@@ -117,7 +95,7 @@ public class PostOnMainTest {
     }
 
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Positive test: 'Post Category' post: ")
     public void SendPostSuccessTest() {
         Date date = new Date();
         String text = "My 'Post Category' post at " + date.toString();
@@ -137,11 +115,5 @@ public class PostOnMainTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 
 }

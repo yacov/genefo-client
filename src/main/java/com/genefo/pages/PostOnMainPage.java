@@ -4,8 +4,10 @@ import com.genefo.util.LogLog4j;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.io.IOException;
 
@@ -17,12 +19,14 @@ public class PostOnMainPage extends Page {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
     // Serves as indication that we are on 'Post' Panel. We need double quota inside. Do not remove it, please
     @FindBy(xpath = "//a[@class='ng-scope active']//*[contains(@ng-class, \"isType('general')\")]")
-
+    @CacheLookup
     WebElement postButtonHighLighted;
     // text field for posting
     @FindBy(xpath = "//textarea[@name = 'bio']")
+    @CacheLookup
     WebElement postField;
     @FindBy(xpath = "//button[@id='submit'][contains(text(),'Post')]")
+    @CacheLookup
     WebElement submitButton;
     @FindBy(xpath = "//*[@class='panel story-panel ng-scope panel-default']/../div[5]//span[@class='ng-binding ng-isolate-scope']")
     WebElement SentPostText;
@@ -33,7 +37,7 @@ public class PostOnMainPage extends Page {
 
     public PostOnMainPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
     }
 
     // Waits until title of our 'What works' Panel appears on the screen

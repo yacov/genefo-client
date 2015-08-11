@@ -36,7 +36,7 @@ public class FollowingDoctorTest {
     PublicProfilePage publicProfilePage;
     ProfileDoctorPage profileDoctorPage;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         baseUrl = PropertyLoader.loadProperty("site.url");
         FirefoxProfile profile = new FirefoxProfile();
@@ -71,7 +71,7 @@ public class FollowingDoctorTest {
         mainPage.clickViewButton();
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Follow user From Connect People Condition Field")
     public void addFollowSuccessFromConnectPeopleConditionField() {
         Reporter.log("AddFollowSuccessFromConnectPeopleConditionField test");
         Log.info("1.AddFollowSuccessFromConnectPeopleConditionField test");
@@ -101,7 +101,7 @@ public class FollowingDoctorTest {
         Reporter.log("1.New profile was added to following successfully from ConnectPeopleThisConditionProfile");
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Unfollow user")
     public void unFollowSuccess() {
         Reporter.log("UnFollowSuccess test");
         Log.info("2.UnFollowSuccess test");
@@ -126,7 +126,7 @@ public class FollowingDoctorTest {
         Reporter.log("2.New profile was unfollowed successfully");
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Follow user From Post")
     public void addFollowSuccessFromPosts() {
         Reporter.log("AddFollowSuccessFromPosts test");
         Log.info("3.AddFollowSuccessFromPosts test");

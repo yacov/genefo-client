@@ -4,54 +4,31 @@ import com.genefo.pages.DocProfInfPage;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.ProfileDoctorPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Oleg on 05.06.2015.
  */
-public class DocProfInfTest {
+public class DocProfInfTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
 
     public LoginPage loginPage;
     public MainPage mainPage;
     public ProfileDoctorPage profileDoctorPage;
     public DocProfInfPage docProfInfPage;
-    public WebDriver driver;
-    public String baseUrl;
     private boolean acceptNextAlert = true;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
         profileDoctorPage = PageFactory.initElements(driver, ProfileDoctorPage.class);
@@ -67,7 +44,7 @@ public class DocProfInfTest {
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         try {
             Log.info("Opening Profile HCP page");
@@ -84,7 +61,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Checking that all correct data added successfully")
     public void EditProfInfSuccess() {
         Log.info("Checking that all correct data added successfully");
         try {
@@ -110,7 +87,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"positive"})
+    @Test(groups = {"positive"}, description = "Checking that work place information added")
     public void AddWorkPlaceInf() {
         Log.info("Checking that work place information added");
         try {
@@ -127,7 +104,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"smoke", "negative"})
+    @Test(groups = {"smoke", "negative"}, description = "Checking that all empty fields added")
     public void AddEmptyFields() {
         Log.info("Checking that all empty fields added");
         try {
@@ -146,20 +123,20 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"smoke", "negative"})
+    @Test(groups = {"smoke", "negative"}, description = "Checking that Specialties with empty field cannot added")
     public void AddEmptySpecialties() {
-        Log.info("Checking that Specialties empty field added");
+        Log.info("Checking that Specialties with empty field cannot added");
         try {
             docProfInfPage
                     .fillSpecialtiesField("");
-            Assert.assertTrue(docProfInfPage.isAddSpecButtonExists() == false, "The Add Specialties Button Enable");
+            Assert.assertTrue(docProfInfPage.isAddSpecButtonDisabled(), "The Add Specialties Button is Enabled");
             Reporter.log("Specialties Button disnable");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Test(groups = {"smoke", "negative"})
+    @Test(groups = {"smoke", "negative"}, description = "Checking that Specialties added and deleted")
     public void AddDelSpecialties() {
         Log.info("Checking that Specialties added and deleted");
         try {
@@ -175,7 +152,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"negative"})
+    @Test(groups = {"negative"}, description = "Checking that Work Place Name added and Work Place Location not")
     public void AddEmptyLocationWPandFillNameWPFields() {
         Log.info("Checking that Work Place Name added and Work Place Location not");
         try {
@@ -189,7 +166,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"negative"})
+    @Test(groups = {"negative"}, description = "Checking that Work Place Name and Work Place Location do not added ")
     public void AddEmptyLocationWPandNameWPFields() {
         Log.info("Checking that Work Place Name and Work Place Location do not added ");
         try {
@@ -203,7 +180,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"positive"})
+    @Test(groups = {"positive"}, description = "Checking that Work Place Name and Work Place Location added and deleted")
     public void DeleteLocationWPandNameWP() {
         Log.info("Checking that Work Place Name and Work Place Location added and deleted");
         try {
@@ -224,7 +201,7 @@ public class DocProfInfTest {
         }
     }
 
-    @Test(groups = {"positive"})
+    @Test(groups = {"positive"}, description = "Checking that All Data deleted")
     public void DeleteAllDataIfExist() {
         Log.info("Checking that All Data deleted");
         try {
@@ -289,10 +266,4 @@ public class DocProfInfTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
