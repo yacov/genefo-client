@@ -4,20 +4,13 @@ import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.ProfileDoctorPage;
 import com.genefo.pages.PublicProfilePage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertFalse;
@@ -26,11 +19,10 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Л on 6/2/2015.
  */
-public class FollowingDoctorTest {
+public class FollowingDoctorTest extends TestBase {
 
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
-    public WebDriver driver;
-    public String baseUrl;
+
     LoginPage loginPage;
     MainPage mainPage;
     PublicProfilePage publicProfilePage;
@@ -38,17 +30,6 @@ public class FollowingDoctorTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         PropertyConfigurator.configure("log4j.properties");
 
@@ -149,10 +130,5 @@ public class FollowingDoctorTest {
         Reporter.log("3.New profile was added to follow successfully from posts");
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+
 }

@@ -4,22 +4,16 @@ import com.genefo.pages.DataProviders;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.MilestoneOnMainPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import static java.lang.Thread.sleep;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -28,10 +22,10 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Zizi, Christina and Mariya on 5/30/2015.
  */
-public class MilestoneOnMainPageTest {
+public class MilestoneOnMainPageTest extends TestBase {
 
-    // private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
-    public WebDriver driver;
+    private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
+
     public WebDriverWait wait;
     public LoginPage loginPage;                         // Pages that we use in our tests
     public MainPage mainPage;
@@ -43,25 +37,12 @@ public class MilestoneOnMainPageTest {
     public String textOtherField;
     public String type;
     public String milestone;
-    public String baseUrl;
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         PropertyConfigurator.configure("log4j.properties");
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
@@ -97,7 +78,7 @@ public class MilestoneOnMainPageTest {
     }*/
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         mainPage.openMainPage(driver, baseUrl);
         mainPage.waitUntilMainPageIsLoaded()
@@ -336,12 +317,6 @@ public class MilestoneOnMainPageTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
 
 

@@ -2,22 +2,14 @@ package com.genefo;
 
 import com.genefo.pages.ProfileDoctorPage;
 import com.genefo.pages.SignUpHCPPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -26,9 +18,8 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Oleg on 31.05.2015.
  */
-public class SignUpHCPTest {
+public class SignUpHCPTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
-    //private String email = "one" + randomAlphabetic(5) + "@usgenefo.com";
     private static String email1 = "one" + randomAlphabetic(5) + "usgenefo.com";
     private static String email2 = "on.e" + randomAlphabetic(5) + "@us.genefo.com";
     private static String email3 = "o_ne" + randomAlphabetic(5) + "@usgenefo.com";
@@ -36,27 +27,11 @@ public class SignUpHCPTest {
     public WebDriverWait wait;
     public SignUpHCPPage signUpHCPPage;
     public ProfileDoctorPage profileDoctorPage;
-    public WebDriver driver;
-    public String baseUrl;
+    private String email = "one" + randomAlphabetic(5) + "@usgenefo.com";
     private boolean acceptNextAlert = true;
 
-    @BeforeClass
-    public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    }
-
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforemethodsetup() {
         try {
             signUpHCPPage = PageFactory.initElements(driver, SignUpHCPPage.class);
@@ -1005,12 +980,6 @@ public class SignUpHCPTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 
     private void sleep() {
         try {

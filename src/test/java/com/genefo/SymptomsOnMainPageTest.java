@@ -5,16 +5,14 @@ import com.genefo.pages.MainPage;
 import com.genefo.pages.SymptomsOnMainPage;
 import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -22,35 +20,22 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by tanyagaus, Lev on 6/10/15.
  */
-public class SymptomsOnMainPageTest {
+public class SymptomsOnMainPageTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
     private static String MY_EMAIL = "jakoff+444@gmail.com";
     private static String MY_Password = "111111";
     private static String PATH_TO_Miki = Paths.get("").toAbsolutePath().toString() + "\\miki.gif";
-    public String baseUrl;
-    public WebDriver driver;
+
     public WebDriverWait wait;
     public MainPage mainPage;
     public LoginPage loginPage;
     public String fillTellUs;
     SymptomsOnMainPage symptomsOnMainPage;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
 
     public void setup() {
         baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         loginPage = PageFactory.initElements(driver, LoginPage.class);
@@ -69,7 +54,7 @@ public class SymptomsOnMainPageTest {
 
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         mainPage
                 .openSymptomsPanel();
@@ -124,12 +109,6 @@ public class SymptomsOnMainPageTest {
         symptomsOnMainPage.createSymptomPost();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 
 }
 

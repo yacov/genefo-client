@@ -4,20 +4,10 @@ import com.genefo.pages.DataProviders;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.MedicineOnMainPage;
-import com.genefo.util.PropertyLoader;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 import static org.testng.AssertJUnit.assertTrue;
@@ -25,29 +15,15 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Marina on 6/1/2015.
  */
-public class MedicineOnMainPageTest {
-    public WebDriverWait wait;
+public class MedicineOnMainPageTest extends TestBase {
     public LoginPage loginPage;                         // Pages that we use in our tests
     public MainPage mainPage;
     public MedicineOnMainPage medicineOnMainPage;
-    public WebDriver driver;
-    public String baseUrl;
+
     private boolean acceptNextAlert = true;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
         medicineOnMainPage = PageFactory.initElements(driver, MedicineOnMainPage.class);
@@ -63,7 +39,7 @@ public class MedicineOnMainPageTest {
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         mainPage
                 .openMedicinePanel();
@@ -120,11 +96,5 @@ public class MedicineOnMainPageTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
 

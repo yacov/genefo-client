@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Tests" verbose="5" data-provider-thread-count="1">
+<suite name="Client part tests" verbose="5" data-provider-thread-count="1">
 	<test name="Reression tests">
 		<parameter name="path" value="/"/>
 
@@ -9,6 +9,20 @@
 			<class name="com.genefo.DocBasInfTest"/>
 			<class name="com.genefo.DocProfInfTest"/>
 			<class name="com.genefo.LoginTest"/>
+			<class name="com.genefo.AddProfilesTest"/>
+			<class name="com.genefo.ContactUSTest"/>
+			<class name="com.genefo.DocAcInfTest"/>
+			<class name="com.genefo.FollowingDoctorTest"/>
+			<class name="com.genefo.FollowingUserTest"/>
+			<class name="com.genefo.GraphsTest"/>
+			<class name="com.genefo.LoginTest"/>
+			<class name="com.genefo.MDRatingTest"/>
+			<class name="com.genefo.MedicineOnMainPageTest"/>
+			<class name="com.genefo.MilestoneOnMainPageTest"/>
+			<class name="com.genefo.PostOnMainTest"/>
+			<class name="com.genefo.ProfileDoctorTest"/>
+			<class name="com.genefo.SignUpHCPTest"/>
+			<class name="com.genefo.SymptomsOnMainPageTest"/>
 		</classes>
 	</test>
 </suite>

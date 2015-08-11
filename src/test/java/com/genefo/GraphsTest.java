@@ -6,21 +6,14 @@ import com.genefo.pages.DataProviders;
 import com.genefo.pages.GrafsPage;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -34,35 +27,18 @@ import static org.testng.AssertJUnit.assertTrue;
 */
 
 
-public class GraphsTest {
+public class GraphsTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
 
     public WebDriverWait wait;
     public LoginPage loginPage;
     public MainPage mainPage;
     public GrafsPage grafsPage;
-    public WebDriver driver;
-    public String baseUrl;
+
     private boolean acceptNextAlert = true;
 
-
-    public GraphsTest() {
-        super();
-    }
-
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         loginPage = PageFactory.initElements(driver, LoginPage.class);
@@ -115,10 +91,4 @@ public class GraphsTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }

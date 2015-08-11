@@ -1,19 +1,12 @@
 package com.genefo;
 
 import com.genefo.pages.*;
-import com.genefo.util.PropertyLoader;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
@@ -21,13 +14,13 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Л on 5/19/2015
  */
-public class AddProfilesTest {
+public class AddProfilesTest extends TestBase {
 
     private static String EMAIL = "ri-lopatina@yandex.ru";
     private static String PASSWORD = "111111";
-    public WebDriver driver;
+
     public WebDriverWait wait;
-    public String baseUrl;
+
     MyProfilesPage myProfilesPage;
     ProfilePage profilePage;
     LoginPage loginPage;
@@ -36,19 +29,7 @@ public class AddProfilesTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
@@ -292,10 +273,5 @@ public class AddProfilesTest {
         profilePage.clickOnDiscoverHome();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+
 }

@@ -1,55 +1,34 @@
 package com.genefo;
 
 import com.genefo.pages.*;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Created by Oleg on 20.06.2015.
  */
-public class ProfileDoctorTest {
+public class ProfileDoctorTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
-    public WebDriver driver;
+
     public LoginPage loginPage;
     public MainPage mainPage;
     public ProfileDoctorPage profileDoctorPage;
     public DocAcInfPage docAcInfPage;
     public DocBasInfPage docBasInfPage;
     public DocProfInfPage docProfInfPage;
-    public String baseUrl;
     private boolean acceptNextAlert = true;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         PropertyConfigurator.configure("log4j.properties");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
@@ -140,10 +119,4 @@ public class ProfileDoctorTest {
         }
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }

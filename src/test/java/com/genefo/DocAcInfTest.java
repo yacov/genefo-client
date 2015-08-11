@@ -4,23 +4,16 @@ import com.genefo.pages.DocAcInfPage;
 import com.genefo.pages.LoginPage;
 import com.genefo.pages.MainPage;
 import com.genefo.pages.ProfileDoctorPage;
-import com.genefo.util.PropertyLoader;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
@@ -28,10 +21,9 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by Oleg on 31.05.2015.
  */
-public class DocAcInfTest {
+public class DocAcInfTest extends TestBase {
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
-    public String baseUrl;
-    public WebDriver driver;
+
     public WebDriverWait wait;
     public LoginPage loginPage;
     public MainPage mainPage;
@@ -43,19 +35,9 @@ public class DocAcInfTest {
     private String EMAIL1 = "osh_il+21@yahoo.com";
     private String EMAIL2 = "osh_il+19@yahoo.com";
 
-    @BeforeClass(groups = {"smoke"}, alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void setup() {
-        baseUrl = PropertyLoader.loadProperty("site.url");
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "en");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 10);
         PropertyConfigurator.configure("log4j.properties");
@@ -74,7 +56,7 @@ public class DocAcInfTest {
         }
     }
 
-    @BeforeMethod(groups = {"smoke"}, alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetUp() {
         try {
             if (profileDoctorPage.isOnProfileDoctorPage() == false) {
@@ -179,10 +161,5 @@ public class DocAcInfTest {
         }
     }
 
-    @AfterClass(groups = {"smoke"}, alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+
 }
