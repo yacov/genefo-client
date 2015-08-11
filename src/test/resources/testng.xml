@@ -8,6 +8,7 @@
 		<classes>
 			<class name="com.genefo.DocBasInfTest"/>
 			<class name="com.genefo.DocProfInfTest"/>
+			<class name="com.genefo.LoginTest"/>
 		</classes>
 	</test>
 </suite>

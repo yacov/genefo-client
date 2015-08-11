@@ -6,60 +6,37 @@ import com.genefo.pages.MainPage;
 import com.genefo.pages.ResetYourPasswordPage;
 import com.genefo.util.LogLog4j;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Created by Oleg on 30.05.2015.
  */
-public class LoginTest {
-    public static String USER = "osh_il+4@yahoo.com";
+public class LoginTest extends TestBase {
+    public static String USER = "jakoff+444@gmail.com";
     public static String PASSWORD = "111111";
-    public static String USER1 = "osh_il+1@yahoo.com";
+    public static String USER1 = "jakoff+55@gmail.com";
     private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
     public HomePage  homePage;
     public LoginPage  loginPage;
     public ResetYourPasswordPage  resetYourPasswordPage;
     public MainPage mainPage;
-    public WebDriver driver;
-    public String baseUrl;
 
-    @BeforeClass(groups = {"smoke"}, alwaysRun = true)
-    public void setup() {
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", "ru");
-        String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-        final File firefoxPath = new File(System.getProperty(
-                "lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-        FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-        firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
-
-        // Start Firefox driver
-        driver = new FirefoxDriver(firefoxBinary, null);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        PropertyConfigurator.configure("log4j.properties");
+    @BeforeClass(alwaysRun = true)
+    public void loginSetup() {
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         mainPage = PageFactory.initElements(driver, MainPage.class);
         homePage = PageFactory.initElements(driver, HomePage.class);
         resetYourPasswordPage = PageFactory.initElements(driver, ResetYourPasswordPage.class);
     }
 
-    @BeforeMethod(groups = {"smoke"}, alwaysRun = true)
-    public void beforeMethodSetUp() {
+    @BeforeMethod(alwaysRun = true)
+    public void loginBeforeMethodSetUp() {
         try {
             driver.get("http://52.10.6.51:8080/login");
             loginPage
@@ -69,7 +46,7 @@ public class LoginTest {
         }
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Checking that all correct data added successfully")
     public void LoginSuccess() {
         Log.info("Checking that all correct data added successfully");
         try {
@@ -88,7 +65,7 @@ public class LoginTest {
         Reporter.log("Login successful");
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Checking ability login ,logout and login again with another user")
     public void LoginLogoutLogin() {
         Log.info("Checking ability login ,logout and login again with another user");
         try {
@@ -106,8 +83,8 @@ public class LoginTest {
                 .fillPasswordField(PASSWORD)
                 .clickOnLogin();
         mainPage.waitUntilMainPageIsLoaded();
-        assertTrue("The Main Page doesn't open", mainPage.isOnMainPage());
-        mainPage.logOut();
+            assertTrue("The Main Page doesn't open", mainPage.isOnMainPage());
+            mainPage.logOut();
         homePage.waitUntilHomePageIsLoaded();
         }catch (Exception e){
             e.printStackTrace();
@@ -115,7 +92,7 @@ public class LoginTest {
         Reporter.log("Login successful");
     }
 
-    @Test(groups = {"smoke", "negative"})
+    @Test(groups = {"smoke", "negative"}, description = "Checking inability lodin without @ in email field")
     public void LoginWithoutAtInEmailField() {
         Log.info("Checking inability lodin without @ in email field");
         try {
@@ -131,7 +108,8 @@ public class LoginTest {
         }
         Reporter.log("Not logged in successful");
     }
-    @Test(groups = {"smoke", "negative"})
+
+    @Test(groups = {"smoke", "negative"}, description = "Checking inability lodin with password contains 1 symbol")
     public void LoginWithPasswordContains1Symbol() {
         Log.info("Checking inability lodin with password contains 1 symbol");
         try {
@@ -148,7 +126,7 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
-    @Test(groups = {"smoke", "positive"})
+    @Test(groups = {"smoke", "positive"}, description = "Checking ability recreate password")
     public void ForgotPassword() {
         Log.info("Checking ability recreate password");
         try {
@@ -164,7 +142,7 @@ public class LoginTest {
         Reporter.log("Password recreated successful");
     }
 
-    @Test(groups = {"smoke"})
+    @Test(groups = {"smoke"}, description = "Checking inability lodin with empty fields")
     public void LoginWithEmptyFields() {
         Log.info("Checking inability lodin with empty fields");
         try {
@@ -182,11 +160,5 @@ public class LoginTest {
         Reporter.log("Not logged in successful");
     }
 
-    @AfterClass(groups = {"smoke"}, alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 
 }

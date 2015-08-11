@@ -45,7 +45,7 @@ public abstract class Page {
 	}
 
 	public void waitUntilIsLoaded(WebElement element) {
-		new WebDriverWait(webDriver, 5).until(ExpectedConditions.visibilityOf(element));
+		new WebDriverWait(webDriver, 15).until(ExpectedConditions.visibilityOf(element));
 	}
 
 	public void reloadPage() {
@@ -124,7 +124,7 @@ public abstract class Page {
 	}
 
 	public void waitUntilElementIsLoaded(WebElement element) throws IOException, InterruptedException {
-		new WebDriverWait(webDriver, 5).until(ExpectedConditions.visibilityOf(element));
+		new WebDriverWait(webDriver, 15).until(ExpectedConditions.visibilityOf(element));
 	}
 
 	public void waitForElement(WebDriverWait wait, String element) {
