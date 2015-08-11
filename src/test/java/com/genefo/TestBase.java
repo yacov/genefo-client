@@ -2,14 +2,13 @@ package com.genefo;
 
 import com.genefo.util.PropertyLoader;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import ru.stqa.selenium.factory.WebDriverFactory;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,17 +25,20 @@ public class TestBase {
 	public void init() {
 		baseUrl = PropertyLoader.loadProperty("site.url");
 		gridHubUrl = PropertyLoader.loadProperty("grid2.hub");
-
-		FirefoxProfile profile = new FirefoxProfile();
-		profile.setPreference("intl.accept_languages", "ru");
-		String Xport = System.getProperty("lmportal.xvfb.id", ":0");
-		final File firefoxPath = new File(System.getProperty(
-				"lmportal.deploy.firefox.path", "/usr/bin/firefox"));
-		FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
-		firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
 		PropertyConfigurator.configure("log4j.properties");
-		// Start Firefox driver
-		driver = new FirefoxDriver(firefoxBinary, null);
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setBrowserName(PropertyLoader.loadProperty("browser.name"));
+		capabilities.setVersion(PropertyLoader.loadProperty("browser.version"));
+		String platform = PropertyLoader.loadProperty("browser.platform");
+		if (!(null == platform || "".equals(platform))) {
+			capabilities.setPlatform(Platform.valueOf(PropertyLoader.loadProperty("browser.platform")));
+		}
+
+		if (!(null == gridHubUrl || "".equals(gridHubUrl))) {
+			driver = WebDriverFactory.getDriver(gridHubUrl, capabilities);
+		} else {
+			driver = WebDriverFactory.getDriver(capabilities);
+		}
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
