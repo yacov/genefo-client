@@ -98,7 +98,7 @@
       </properties>
     </profile>
     <profile>
-      <id>test</id>
+      <id>smoke</id>
       <properties>
         <env>prod</env>
         <user.username></user.username>
@@ -138,9 +138,6 @@
         <browser.version></browser.version>
         <browser.platform></browser.platform>
       </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
