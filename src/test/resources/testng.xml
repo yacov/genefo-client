@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Client part tests" verbose="5" data-provider-thread-count="1">
-	<test name="Reression tests">
+	<test name="Full Reression tests">
 		<parameter name="path" value="/"/>
 
 

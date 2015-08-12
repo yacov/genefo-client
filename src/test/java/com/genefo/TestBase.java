@@ -7,7 +7,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.internal.TestResult;
@@ -33,11 +33,10 @@ public class TestBase {
 		baseUrl = "http://52.10.6.51:8080";
 		PropertyConfigurator.configure("log4j.properties");
 		DesiredCapabilities dCaps = new DesiredCapabilities();
-		dCaps = new DesiredCapabilities();
 		dCaps.setJavascriptEnabled(true);
 		dCaps.setCapability("takesScreenshot", true);
 		driver = new PhantomJSDriver(dCaps);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 	}
 
@@ -54,7 +53,8 @@ public class TestBase {
 			FileUtils.copyFile(imageFile, new File(destFile));
 		}
 	}
-	@AfterSuite(alwaysRun = true)
+
+	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		if (driver != null) {
 			driver.quit();
