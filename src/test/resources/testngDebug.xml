@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Client part tests" verbose="5" data-provider-thread-count="1">
+    <test name="Smoke tests">
+        <parameter name="path" value="/"/>
+
+
+        <classes>
+            <class name="com.genefo.AddProfilesTest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,21 +1,12 @@
 package com.genefo;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.internal.TestResult;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,7 +31,7 @@ public class TestBase {
 
 	}
 
-	@AfterTest(alwaysRun = true)
+	/*@AfterTest(alwaysRun = true)
 	public void takescreen(TestResult result) throws IOException {
 		if (!result.isSuccess()) {
 			File imageFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -52,7 +43,7 @@ public class TestBase {
 			String destFile = destDir + "/" + failureImageFileName;
 			FileUtils.copyFile(imageFile, new File(destFile));
 		}
-	}
+	}*/
 
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {

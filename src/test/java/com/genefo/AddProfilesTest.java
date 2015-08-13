@@ -1,7 +1,6 @@
 package com.genefo;
 
 import com.genefo.pages.*;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
@@ -29,13 +28,12 @@ public class AddProfilesTest extends TestBase {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        loginPage = PageFactory.initElements(driver, LoginPage.class);
-        mainPage = PageFactory.initElements(driver, MainPage.class);
-        myProfilesPage = PageFactory.initElements(driver, MyProfilesPage.class);
-        profilePage = PageFactory.initElements(driver, ProfilePage.class);
-        summaryPage = PageFactory.initElements(driver, SummaryPage.class);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        loginPage = new LoginPage(driver);
+        mainPage = new MainPage(driver);
+        myProfilesPage = new MyProfilesPage(driver);
+        profilePage = new ProfilePage(driver);
+        summaryPage = new SummaryPage(driver);
         try {
             loginPage.openLoginPage(driver, baseUrl);
             loginPage.isOnLoginPage();

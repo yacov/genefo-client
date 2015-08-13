@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.io.IOException;
 
@@ -22,6 +23,7 @@ public class MyProfilesPage extends Page {
 
     //Button
     @FindBy(xpath = "//div[@class='panel-body']//div[@class='btn-add-profile']/i")
+
     WebElement addPlusButton;
 
     @FindBy(xpath = "//ul[@class='people_list people_list_in_profiles']/*[last()]//div[@class='profileName ng-binding']")
@@ -30,7 +32,7 @@ public class MyProfilesPage extends Page {
     public MyProfilesPage(WebDriver driver) {
         super(driver);
         PropertyConfigurator.configure("log4j.properties");
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
     }
 
     public MyProfilesPage openMyProfilesPage() {
